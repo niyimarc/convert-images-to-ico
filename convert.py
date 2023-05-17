@@ -1,5 +1,6 @@
 from PIL import Image
 import os
+from slugify import slugify
 
 def convert_to_ico(image_path, output_path):
     # Open the image using Pillow
@@ -26,8 +27,11 @@ for file_name in os.listdir(input_folder):
     if not file_path.endswith('.jpg') and not file_path.endswith('.jpeg') and not file_path.endswith('.png'):
         continue
 
-    # Create the output file path by replacing the extension with .ico
-    output_path = os.path.join(output_folder, os.path.splitext(file_name)[0] + '.ico')
+    # Slugify the file name
+    slugified_name = slugify(os.path.splitext(file_name)[0])
+
+    # Create the output file path by replacing the extension with .ico and adding the slugified name
+    output_path = os.path.join(output_folder, slugified_name + '.ico')
 
     # Convert the image to .ico format and save it
     convert_to_ico(file_path, output_path)
